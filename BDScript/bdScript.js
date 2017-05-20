@@ -144,8 +144,8 @@ module.exports = () => {
         }
 
     ]
+    insert(Ventas, lsVentas, (elem) => {
+        console.log(elem);
+    })
     //fin ventas
-
-
-
-}
+}// fin de funcion

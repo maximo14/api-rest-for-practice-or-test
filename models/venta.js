@@ -6,7 +6,7 @@ var venta_schema = new Schema({
   nro_venta: Number,
   cliente: {type: Schema.Types.ObjectId, ref:"Usuario"},
   fecha: {type: Date, default: Date.now},
-  detalleVenta: [{type: Schema.type.ObjectId, ref:"DetalleVenta"}]
+  detalleVenta: [{type: Schema.Types.ObjectId, ref:"DetalleVenta"}]
 });
 
 
