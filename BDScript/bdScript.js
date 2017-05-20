@@ -23,7 +23,7 @@ module.exports = () => {
             }
         });
     }
-
+    //fin funciones auxiliares
 
     ///usuarios
     var lsUsuarios = [
@@ -112,19 +112,39 @@ module.exports = () => {
 
     insert(DetalleVentas, lsDetalle1, (elem) => {
         console.log(elem);
-        ids_detalle_venta1.push(elem);
+        ids_detalle_venta1.push(elem._id);
     });
     insert(DetalleVentas, lsDetalle2, (elem) => {
         console.log(elem);
-        ids_detalle_venta2.push(elem);
+        ids_detalle_venta2.push(elem._id);
     });
 
     insert(DetalleVentas, lsDetalle3, (elem) => {
         console.log(elem);
-        ids_detalle_venta3.push(elem);
+        ids_detalle_venta3.push(elem._id);
     });
     //fin detalle-ventas
-    
+
+    //Ventas
+    lsVentas = [
+        {
+            numero: 1,
+            cliente: ids_usuarios[0],
+            detallVenta: ids_detalle_venta1
+        },
+        {
+            numero: 2,
+            cliente: ids_usuarios[0],
+            detallVenta: ids_detalle_venta2
+        },
+        {
+            numero: 3,
+            cliente: ids_usuarios[1],
+            detallVenta: ids_detalle_venta3
+        }
+
+    ]
+    //fin ventas
 
 
 

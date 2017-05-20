@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var venta_schema = new Schema({
   nro_venta: Number,
-  cliente: Schema.Types.ObjectId,
+  cliente: {type: Schema.Types.ObjectId, ref:"Usuario"},
   fecha: {type: Date, default: Date.now},
   detalleVenta: [{type: Schema.type.ObjectId, ref:"DetalleVenta"}]
 });
