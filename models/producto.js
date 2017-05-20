@@ -12,4 +12,4 @@ var producto_schema = new Schema({
 var Producto = mongoose.model("Producto", producto_schema);
 
 //exporto el modulo para que pueda ser accesido desde cualquier parte
-module.exports.Producto = Producto;
+module.exports = Producto;

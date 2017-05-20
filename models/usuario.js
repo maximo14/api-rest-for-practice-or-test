@@ -12,4 +12,4 @@ var usuario_schema = new Schema({
 var Usuario = mongoose.model("Usuario",usuario_schema);
 
 //exporto el modulo para que pueda ser accesido desde cualquier parte
-module.exports.Usuario = Usuario;
+module.exports = Usuario;
