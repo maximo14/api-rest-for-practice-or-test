@@ -2,13 +2,16 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const scriptBD = require("./BDScript/bdScript");
+const methodOverride = require("method-override");
 
 //modelos
 var Usuario = require("./models/usuario");
 var Producto = require("./models/producto");
 var DetalleVentas = require("./models/detalle-venta");
 var Ventas = require("./models/venta");
+
+//controladores
+const router_usuario = require('./controlers/ctr_usuarios')
 
 const app = express();
 
@@ -20,21 +23,30 @@ mongoose.connect("mongodb://localhost/tienda_productos");
 mongoose.Promise = global.Promise;
 // fin de mongo db
 
-
-app.get("/Ventas", function (req, res) {
-    Ventas.findById("59208ca934e7201fc0b2d946",(err,venta)=>{
-            res.status(200).send(venta);
-    });
+/**
+ app.get("/ventas", function (req, res) {
+        Ventas.findOne()
+                .populate('cliente')
+                .populate({ path: 'detalleVenta', populate: { path: 'producto' } })
+                .exec((err, venta) => {
+                        res.status(200).send(venta);
+                });
 });
+ */
 
 
 //midleware
+//hago que express use body-parser para poder acceder a los elementos del html
+app.use(bodyParser.urlencoded({ extended: false }));
 //funcion del body parser para el manejo de JSON
 app.use(bodyParser.json());
 
-//hago que express use body-parser para poder acceder a los elementos del html
-app.use(bodyParser.urlencoded({ extended: true }));
+//
+app.use(methodOverride());
 
+
+//routers
+app.use("/api",router_usuario);
 
 
 app.listen(3000, () => {
