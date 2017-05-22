@@ -18,7 +18,7 @@ router.route("/usuario")
             password: req.body.password
         });
         user.save((err, user) => {
-            if (err) res.status(500).send(err.mensaje);
+            if (err) res.status(500).send(err);
             else {
                 res.status(200).jsonp(user);
             }

@@ -5,7 +5,7 @@ var Producto = require("../models/producto");
 router.route("/producto")
     .get((req, res) => {
         Producto.find((err, prod) => {
-            if (err) res.status(500).send(err.mensaje);
+            if (err) res.status(500).send(err);
             else {
                 res.status(200).json(prod);
             }
@@ -18,7 +18,7 @@ router.route("/producto")
             precio: req.body.precio,
         });
         producto.save((err, prod) => {
-            if (err) res.status(500).send(err.mensaje);
+            if (err) res.status(500).send(err);
             else {
                 res.status(200).jsonp(prod);
             }
@@ -40,7 +40,7 @@ router.route("/producto/:id")
             marca: req.body.marca,
             precio: req.body.precio
         }, (err, prod) => {
-            if (err) res.status(500).send(err.mensaje);
+            if (err) res.status(500).send(err);
             else {
                 res.status(200).json(prod);
             }
@@ -48,7 +48,7 @@ router.route("/producto/:id")
     })
     .delete((req, res) => {
         Producto.findOneAndRemove({ _id: req.params.id }, (err, prod) => {
-            if (err) res.status(500).send(err.mensaje);
+            if (err) res.status(500).send(err);
             else {
                 res.status(200).json(prod);
             }
