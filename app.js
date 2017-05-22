@@ -11,7 +11,8 @@ var DetalleVentas = require("./models/detalle-venta");
 var Ventas = require("./models/venta");
 
 //controladores
-const router_usuario = require('./controlers/ctr_usuarios')
+const router_usuario = require('./controlers/ctr_usuarios');
+const router_producto = require('./controlers/ctr_producto');
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use(methodOverride());
 
 //routers
 app.use("/api",router_usuario);
+app.use("/api",router_producto);
 
 
 app.listen(3000, () => {
