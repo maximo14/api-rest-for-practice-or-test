@@ -44,10 +44,28 @@ router.route("/venta/:id")
                 else res.status(200).jsonp(venta);
             });
     })
-    .put()
+    .put((req, res) => {
+        Venta.findByIdAndUpdate({ _id: req.body._id }, {
+            cliente: req.body.cliente
+        }, (err, venta) => {
+            if (err) res.status(500).send(err);
+            else {
+                let detalles = req.body.detalleVenta
+                for (det of detalles) {
+                    DetalleVenta.findByIdAndUpdate({ _id: det._id }, {
+                        nro: det.nro,
+                        producto: det.producto
+                    }, (err) => {
+                        if (err) res.status(500).send(err);
+                    });
+                }
+                res.status(200).jsonp(venta);
+            }//fin else
+        });
+    })
     .delete((req, res) => {
-        Venta.findByIdAndRemove(req.params.id,(err,venta)=>{
-            if(err) res.status(500).send(err)
+        Venta.findByIdAndRemove(req.params.id, (err, venta) => {
+            if (err) res.status(500).send(err)
             else res.status(200).jsonp(venta);
         });
     });
