@@ -6,6 +6,7 @@ var cliente_schema = new Schema({
     apellido:String,
     dni: Number,
     email: String,
+    usuario:{type: Schema.Types.ObjectId, ref:"Usuario"}
 });
 
 

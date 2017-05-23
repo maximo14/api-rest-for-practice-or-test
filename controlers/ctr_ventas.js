@@ -66,7 +66,14 @@ router.route("/venta/:id")
     .delete((req, res) => {
         Venta.findByIdAndRemove(req.params.id, (err, venta) => {
             if (err) res.status(500).send(err)
-            else res.status(200).jsonp(venta);
+            else {
+                for (det of venta.detalleVenta) {
+                    DetalleVenta.findByIdAndRemove({ _id: det }, (err, detalle) => {
+                        if (err) res.status(500).send(err);
+                    })
+                }
+                res.status(200).jsonp(venta);
+            }
         });
     });
 
