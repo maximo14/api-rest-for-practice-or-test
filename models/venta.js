@@ -1,4 +1,11 @@
 var mongoose = require("mongoose");
+var autoIncrement = require("mongodb-autoincrement");
+
+autoIncrement.setDefaults({
+  field: "nro_venta",
+  step: 1
+});
+
 var Schema = mongoose.Schema;
 
 
@@ -12,11 +19,12 @@ var venta_schema = new Schema({
   fecha: {
     type: Date,
     default: Date.now,
-    required:[true,'La fecha es obligatoria']
+    required: [true, 'La fecha es obligatoria']
   },
   detalleVenta: [{ type: Schema.Types.ObjectId, ref: "DetalleVenta" }]
 });
 
+venta_schema.plugin(autoIncrement.mongoosePlugin);
 
 var Venta = mongoose.model("Venta", venta_schema);
 

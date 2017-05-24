@@ -13,7 +13,7 @@ var usuario_schema = new Schema({
     password: {
         type: String,
         required:[true, 'La contraseña es obligatoria']
-    }
+    },
 });
 
 

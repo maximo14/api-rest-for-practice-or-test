@@ -9,7 +9,18 @@ router.route("/cliente")
             else res.status(200).jsonp(client);
         });
     })
-    .post();
+    .post((req, res) => {
+        var cliente = new Cliente({
+            nombre: req.body.nombre,
+            apellido: req.body.apellido,
+            dni: req.body.dni,
+            usuario: req.body.usuario
+        });
+        cliente.save((err, client) => {
+            if (err) res.status(500).send(err);
+            else res.status(200).jsonp(client);
+        });
+    });
 
 router.route("/cliente/:id")
     .get((req, res) => {
@@ -18,7 +29,22 @@ router.route("/cliente/:id")
             else res.status(200).jsonp(client);
         })
     })
-    .put()
-    .delete();
+    .put((req, res) => {
+        Cliente.findOneAndUpdate({ _id: req.params.id }, {
+            nombre: req.body.nombre,
+            apellido: req.body.apellido,
+            dni: req.body.dni,
+            usuario: req.body.usuario 
+        }, (err, cliente) => {
+            if (err) res.status(500).send(err);
+            else res.status(200).jsonp(cliente);
+        });
+    })
+    .delete((req, res) => {
+        Cliente.findByIdAndRemove(req.params.id, (err, client) => {
+            if (err) res.status(500).send(err);
+            else res.status(200).jsonp(client);
+        });
+    });
 
 module.exports = router;
