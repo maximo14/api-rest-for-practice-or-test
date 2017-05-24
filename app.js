@@ -14,6 +14,7 @@ var Ventas = require("./models/venta");
 const router_usuario = require('./controlers/ctr_usuarios');
 const router_producto = require('./controlers/ctr_producto');
 const router_venta = require('./controlers/ctr_ventas');
+const router_cliente = require('./controlers/ctr_cliente');
 
 const app = express();
 
@@ -48,9 +49,10 @@ app.use(methodOverride());
 
 
 //routers
-app.use("/api",router_usuario);
-app.use("/api",router_producto);
-app.use("/api",router_venta);
+app.use("/api", router_usuario);
+app.use("/api", router_producto);
+app.use("/api", router_venta);
+app.use("/api", router_cliente);
 
 
 app.listen(3000, () => {

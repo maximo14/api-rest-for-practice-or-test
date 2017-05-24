@@ -53,7 +53,7 @@ router.route("/venta/:id")
                 let detalles = req.body.detalleVenta
                 for (det of detalles) {
                     DetalleVenta.findByIdAndUpdate({ _id: det._id }, {
-                        nro: det.nro,
+                        cant: det.cant,
                         producto: det.producto
                     }, (err) => {
                         if (err) res.status(500).send(err);
