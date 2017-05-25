@@ -1,16 +1,10 @@
 var mongoose = require("mongoose");
-var autoIncrement = require("mongodb-autoincrement");
-
-autoIncrement.setDefaults({
-  field: "nro_venta",
-  step: 1
-});
-
+var Counter = require("../models/counter");
 var Schema = mongoose.Schema;
 
 
 var venta_schema = new Schema({
-  nro_venta: Number,
+  nro_venta:Number,
   cliente: {
     type: Schema.Types.ObjectId,
     ref: "Usuario",
@@ -24,7 +18,17 @@ var venta_schema = new Schema({
   detalleVenta: [{ type: Schema.Types.ObjectId, ref: "DetalleVenta" }]
 });
 
-venta_schema.plugin(autoIncrement.mongoosePlugin);
+//para realizar el auto incremento en nro_venta
+venta_schema.pre('save', function(next) {
+    var doc = this;
+    Counter.findByIdAndUpdate({_id: 'ventas'}, {$inc: { seq: 1} }, function(error, counter)   {
+        if(error)
+            return next(error);
+        doc.nro_venta = counter.seq;
+        next();
+    });
+});
+//para realizar el auto incremento en nro_venta
 
 var Venta = mongoose.model("Venta", venta_schema);
 

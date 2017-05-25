@@ -23,6 +23,9 @@ var Cliente = require("../models/cliente");
 var Producto = require("../models/producto");
 var DetalleVentas = require("../models/detalle-venta");
 var Ventas = require("../models/venta");
+var Counter = require("../models/counter");
+
+
 
 
 //funciones auxiliares
@@ -37,6 +40,18 @@ var insert = (modelo, listaObetos, callback) => {
     });
 }
 //fin funciones auxiliares
+
+
+///contadores
+var lsContador = [{
+    _id: 'ventas',
+    seq: 1
+}];
+
+insert(Counter, lsContador, (elem) => {
+    console.log(elem);
+});
+///fin contadores
 
 ///usuarios
 var lsUsuarios = [
@@ -80,11 +95,11 @@ setTimeout(() => {
                 usuario: user[2]._id
             }
         ]
-        insert(Cliente,lsCliente,(elem)=>{
+        insert(Cliente, lsCliente, (elem) => {
             console.log(elem);
         });
     });//fin Usuario.find()
-}, 12000);//fin SetTimeout
+}, 3000);//fin SetTimeout
 
 
 //producto
@@ -158,24 +173,24 @@ setTimeout(() => {
             console.log(elem);
         });
     });
-}, 3000);
+}, 6000);
 
 setTimeout(() => {
     Usuario.find((err, user) => {
         DetalleVentas.find((err, detalles) => {
             lsVentas = [
                 {
-                    nro_venta: 1,
+                    //nro_venta: 1,
                     cliente: user[0]._id,
                     detalleVenta: detalles[1]
                 },
                 {
-                    nro_venta: 2,
+                    //nro_venta: 2,
                     cliente: user[0]._id,
                     detalleVenta: [detalles[2]._id, detalles[3]._id]
                 },
                 {
-                    nro_venta: 3,
+                    //nro_venta: 3,
                     cliente: user[1]._id,
                     detalleVenta: [detalles[4]._id]
                 }
@@ -186,7 +201,7 @@ setTimeout(() => {
             });//fin insert
         });//fin DetalleVentas.find()
     });//fin Usuario.find()
-}, 6000);//fin SetTimeout
+}, 9000);//fin SetTimeout
 
 
 

@@ -4,11 +4,13 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 
+
 //modelos
 var Usuario = require("./models/usuario");
 var Producto = require("./models/producto");
 var DetalleVentas = require("./models/detalle-venta");
 var Ventas = require("./models/venta");
+var Counter = require("./models/counter");
 
 //controladores
 const router_usuario = require('./controlers/ctr_usuarios');
