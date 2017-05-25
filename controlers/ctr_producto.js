@@ -1,6 +1,13 @@
 var express = require("express");
 var router = express.Router();
 var Producto = require("../models/producto");
+const authorization = require("../midleware/authorization");
+
+//rutas protegidas 
+router.post("/producto", authorization);
+router.put("/producto/:id", authorization);
+router.delete("/producto/:id", authorization);
+
 
 router.route("/producto")
     .get((req, res) => {
@@ -34,7 +41,7 @@ router.route("/producto/:id")
             }
         });
     })
-    .put((req, res) => {        
+    .put((req, res) => {
         Producto.findByIdAndUpdate({ _id: req.params.id }, {
             nombre: req.body.nombre,
             marca: req.body.marca,

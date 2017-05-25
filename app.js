@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 
+//config
+const config = require("./config");
 
 //modelos
 var Usuario = require("./models/usuario");
@@ -17,28 +19,21 @@ const router_usuario = require('./controlers/ctr_usuarios');
 const router_producto = require('./controlers/ctr_producto');
 const router_venta = require('./controlers/ctr_ventas');
 const router_cliente = require('./controlers/ctr_cliente');
+const router_autho = require('./controlers/ctr_autho');
+
+
+
+
 
 const app = express();
 
 
 //para la conexion a mongo db
-mongoose.connect("mongodb://localhost/tienda_productos");
+mongoose.connect(config.MONGO_PATH);
 
 // Use native promises -- Nose porque es esto pero ahce que ande
 mongoose.Promise = global.Promise;
 // fin de mongo db
-
-/**
- app.get("/ventas", function (req, res) {
-        Ventas.findOne()
-                .populate('cliente')
-                .populate({ path: 'detalleVenta', populate: { path: 'producto' } })
-                .exec((err, venta) => {
-                        res.status(200).send(venta);
-                });
-});
- */
-
 
 //midleware
 //hago que express use body-parser para poder acceder a los elementos del html
@@ -55,6 +50,7 @@ app.use("/api", router_usuario);
 app.use("/api", router_producto);
 app.use("/api", router_venta);
 app.use("/api", router_cliente);
+app.use("/api",router_autho);
 
 
 app.listen(3000, () => {

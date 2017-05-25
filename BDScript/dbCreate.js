@@ -10,8 +10,9 @@ sc.js, recordando siempre vaciar la base de datos
 
 
 const mongoose = require("mongoose");
+const config = require("../config");
 //para la conexion a mongo db
-mongoose.connect("mongodb://localhost/tienda_productos");
+mongoose.connect(config.MONGO_PATH);
 
 // Use native promises -- Nose porque es esto pero ahce que ande
 mongoose.Promise = global.Promise;
