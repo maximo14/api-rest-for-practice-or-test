@@ -1,6 +1,16 @@
 var express = require("express");
 var router = express.Router();
 var Usuario = require("../models/usuario");
+const authorization = require("../midleware/authorization");
+
+//rutas protegidas 
+router.get("/usuario", authorization);
+router.post("/usuario", authorization);
+router.get("/usuario/:id", authorization);
+router.put("/usuario/:id", authorization);
+router.delete("/usuario/:id", authorization);
+
+
 
 router.route("/usuario")
     .get((req, res) => {

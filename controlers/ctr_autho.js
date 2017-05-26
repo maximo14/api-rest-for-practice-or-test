@@ -28,14 +28,20 @@ router.route("/singup")
 router.route("/singin")
     .post((req, res) => {
         Usuario.findOne({
-            nombre: req.body.nombre,
-            password: req.body.password
+            nombre: req.body.nombre            
         },
             (err, user) => {
                 if (err) res.status(500).send(err);
                 else {
                     if (user != null) {
-                        res.status(200).jsonp({ token: Service.createToken(user) });
+                        user.comparePassword(req.body.password,(err,isMatch)=>{
+                             if (err) res.status(500).send(err);
+                             else{                               
+                                 if(isMatch == true) res.status(200).jsonp({ token: Service.createToken(user) });
+                                 else res.status(500).send({
+                                message: `El nombre o la password del usuario no coinciden con uno existente`});
+                             }
+                        });                      
                     } else res.status(500).send({
                         message: `El nombre o la password del usuario no coinciden con uno existente`  });
                 }

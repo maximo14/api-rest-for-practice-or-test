@@ -2,6 +2,17 @@ var express = require("express");
 var router = express.Router();
 var Venta = require("../models/venta");
 var DetalleVenta = require("../models/detalle-venta");
+const authorization = require("../midleware/authorization");
+
+
+
+//rutas protegidas
+router.get("/venta", authorization);
+router.post("/venta", authorization);
+router.get("/venta/:id", authorization);
+router.put("/venta/:id", authorization);
+router.delete("/venta/:id", authorization);
+
 
 router.route("/venta")
     .get((req, res) => {
