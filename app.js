@@ -50,7 +50,7 @@ app.use("/api", router_usuario);
 app.use("/api", router_producto);
 app.use("/api", router_venta);
 app.use("/api", router_cliente);
-app.use("/api",router_autho);
+app.use("/api", router_autho);
 
 
 app.listen(3000, () => {
