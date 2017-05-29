@@ -4,15 +4,15 @@ var Usuario = require("../models/usuario");
 const authorization = require("../midleware/authorization");
 
 //rutas protegidas 
-router.get("/usuario", authorization);
-router.post("/usuario", authorization);
-router.get("/usuario/:id", authorization);
-router.put("/usuario/:id", authorization);
-router.delete("/usuario/:id", authorization);
+router.get("/usuarios", authorization);
+router.post("/usuarios", authorization);
+router.get("/usuarios/:id", authorization);
+router.put("/usuarios/:id", authorization);
+router.delete("/usuarios/:id", authorization);
 
 
 
-router.route("/usuario")
+router.route("/usuarios")
     .get((req, res) => {
         Usuario.find((err, user) => {
             if (err) console.log("Error en /cliente get");
@@ -35,7 +35,7 @@ router.route("/usuario")
         });
     });
 
-router.route("/usuario/:id")
+router.route("/usuarios/:id")
     .get((req, res) => {
         Usuario.findById(req.params.id, (err, user) => {
             if (err) console.log("Error en /cliente get");

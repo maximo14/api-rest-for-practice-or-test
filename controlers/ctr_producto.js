@@ -4,12 +4,12 @@ var Producto = require("../models/producto");
 const authorization = require("../midleware/authorization");
 
 //rutas protegidas 
-router.post("/producto", authorization);
-router.put("/producto/:id", authorization);
-router.delete("/producto/:id", authorization);
+router.post("/productos", authorization);
+router.put("/productos/:id", authorization);
+router.delete("/productos/:id", authorization);
 
 
-router.route("/producto")
+router.route("/productos")
     .get((req, res) => {
         Producto.find((err, prod) => {
             if (err) res.status(500).send(err);
@@ -32,7 +32,7 @@ router.route("/producto")
         });
     });
 
-router.route("/producto/:id")
+router.route("/productos/:id")
     .get((req, res) => {
         Producto.findById(req.params.id, (err, prod) => {
             if (err) res.status(500).send(err);

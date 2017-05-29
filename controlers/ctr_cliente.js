@@ -5,13 +5,13 @@ const authorization = require("../midleware/authorization");
 
 
 //rutas protegidas
-router.get("/cliente", authorization);
-router.post("/cliente", authorization);
-router.get("/cliente/:id", authorization);
-router.put("/cliente/:id", authorization);
-router.delete("/cliente/:id", authorization);
+router.get("/clientes", authorization);
+router.post("/clientes", authorization);
+router.get("/clientes/:id", authorization);
+router.put("/clientes/:id", authorization);
+router.delete("/clientes/:id", authorization);
 
-router.route("/cliente")
+router.route("/clientes")
     .get((req, res) => {
         Cliente.find((err, client) => {
             if (err) res.status(500).send(err);
@@ -31,7 +31,7 @@ router.route("/cliente")
         });
     });
 
-router.route("/cliente/:id")
+router.route("/clientes/:id")
     .get((req, res) => {
         Cliente.findById(req.params.id, (err, client) => {
             if (err) res.status(500).send(err);

@@ -7,14 +7,14 @@ const authorization = require("../midleware/authorization");
 
 
 //rutas protegidas
-router.get("/venta", authorization);
-router.post("/venta", authorization);
-router.get("/venta/:id", authorization);
-router.put("/venta/:id", authorization);
-router.delete("/venta/:id", authorization);
+router.get("/ventas", authorization);
+router.post("/ventas", authorization);
+router.get("/ventas/:id", authorization);
+router.put("/ventas/:id", authorization);
+router.delete("/ventas/:id", authorization);
 
 
-router.route("/venta")
+router.route("/ventas")
     .get((req, res) => {
         Venta.find()
             .populate('cliente')
@@ -45,7 +45,7 @@ router.route("/venta")
         });
     });
 
-router.route("/venta/:id")
+router.route("/ventas/:id")
     .get((req, res) => {
         Venta.findById(req.params.id)
             .populate('cliente')
