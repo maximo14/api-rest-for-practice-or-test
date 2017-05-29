@@ -36,12 +36,10 @@ mongoose.Promise = global.Promise;
 // fin de mongo db
 
 //midleware
-//hago que express use body-parser para poder acceder a los elementos del html
-app.use(bodyParser.urlencoded({ extended: false }));
-//funcion del body parser para el manejo de JSON
-app.use(bodyParser.json());
-
-//
+app.use(bodyParser.json());                                     
+app.use(bodyParser.urlencoded({extended: true}));               
+app.use(bodyParser.text());                                    
+app.use(bodyParser.json({ type: 'application/json'}));
 app.use(methodOverride());
 
 
@@ -56,3 +54,5 @@ app.use("/api", router_autho);
 app.listen(3000, () => {
         console.log("Server funcionando");
 })
+
+module.exports = app; // for test
