@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const producto = require("../models/producto");
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const server = require('../app');//revisar
+const server = require('../app')
 const service = require("../shared/service");
 const should = chai.should();
 
@@ -11,12 +11,14 @@ chai.use(chaiHttp);
 //usuario para token
 let token = service.createToken({ _id: "59287e64f4c4801fb49dac61" });
 
+
 //Our parent block
 describe('Productos', () => {
     beforeEach((done) => { //Before each test we empty the database
         producto.remove({}, (err) => {
             done();
         });
+
     });
 
     /*

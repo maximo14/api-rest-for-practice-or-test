@@ -4,9 +4,9 @@
   "description": "Api Rest para uso generales",
   "main": "app.js",
   "scripts": {
-    "prestart":"start mongod",
-    "start":"node app.js",   
-    "test": "mocha --timeout 10000"
+    "prestart": "start mongod",
+    "start": "node app.js",
+    "test": "SET NODE_ENV=test&& mocha --timeout 120000"
   },
   "author": "Maximo fiora",
   "license": "ISC",
@@ -22,6 +22,7 @@
   "devDependencies": {
     "chai": "^4.0.0",
     "chai-http": "^3.0.0",
-    "mocha": "^3.4.2"
+    "mocha": "^3.4.2",
+    "mockgoose": "^7.3.1"
   }
 }

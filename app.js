@@ -2,6 +2,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const Mockgoose = require('mockgoose').Mockgoose;//para el mock de db se datos
 const methodOverride = require("method-override");
 
 //config
@@ -21,25 +22,30 @@ const router_venta = require('./controlers/ctr_ventas');
 const router_cliente = require('./controlers/ctr_cliente');
 const router_autho = require('./controlers/ctr_autho');
 
-
-
-
-
 const app = express();
-
-
-//para la conexion a mongo db
-mongoose.connect(config.MONGO_PATH);
 
 // Use native promises -- Nose porque es esto pero ahce que ande
 mongoose.Promise = global.Promise;
-// fin de mongo db
+
+//para la conexion a mongo db
+//mongoose.connect(config.MONGO_PATH);
+if (process.env.NODE_ENV == "test") {
+        var mockgoose = new Mockgoose(mongoose);
+        mockgoose.prepareStorage().then(() => {
+                mongoose.connect(config.MONGO_TEST);
+                mongoose.connection.on('connected', () => {
+                        console.log('db test connection is now open');
+                });
+        });
+} else {
+        mongoose.connect(config.MONGO_PATH);
+}
 
 //midleware
-app.use(bodyParser.json());                                     
-app.use(bodyParser.urlencoded({extended: true}));               
-app.use(bodyParser.text());                                    
-app.use(bodyParser.json({ type: 'application/json'}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: 'application/json' }));
 app.use(methodOverride());
 
 
