@@ -6,5 +6,8 @@ db.clientes.drop()
 db.ventas.drop()
 db.usuarios.drop()
 db.counters.drop()
+db.permissions.drop()
+db.roles.drop()
+
 
 show collections

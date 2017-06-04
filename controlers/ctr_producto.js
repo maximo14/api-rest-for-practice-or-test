@@ -1,12 +1,6 @@
 var express = require("express");
 var router = express.Router();
 var Producto = require("../models/producto");
-const authorization = require("../midleware/authorization");
-
-//rutas protegidas 
-router.post("/productos", authorization);
-router.put("/productos/:id", authorization);
-router.delete("/productos/:id", authorization);
 
 
 router.route("/productos")

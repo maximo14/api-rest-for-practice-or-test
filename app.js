@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Mockgoose = require('mockgoose').Mockgoose;//para el mock de db se datos
 const methodOverride = require("method-override");
+const authorization = require("./midleware/authorization");
 
 //config
 const config = require("./config");
@@ -14,6 +15,9 @@ var Producto = require("./models/producto");
 var DetalleVentas = require("./models/detalle-venta");
 var Ventas = require("./models/venta");
 var Counter = require("./models/counter");
+var Role = require("./models/role");
+var Permission = require("./models/permission");
+
 
 //controladores
 const router_usuario = require('./controlers/ctr_usuarios');
@@ -21,6 +25,7 @@ const router_producto = require('./controlers/ctr_producto');
 const router_venta = require('./controlers/ctr_ventas');
 const router_cliente = require('./controlers/ctr_cliente');
 const router_autho = require('./controlers/ctr_autho');
+
 
 const app = express();
 
@@ -50,6 +55,7 @@ app.use(methodOverride());
 
 
 //routers
+app.use("/api", authorization);
 app.use("/api", router_usuario);
 app.use("/api", router_producto);
 app.use("/api", router_venta);

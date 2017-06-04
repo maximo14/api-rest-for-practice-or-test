@@ -25,6 +25,8 @@ var Producto = require("../models/producto");
 var DetalleVentas = require("../models/detalle-venta");
 var Ventas = require("../models/venta");
 var Counter = require("../models/counter");
+var Permission = require("../models/permission");
+var Role = require("../models/role");
 
 
 
@@ -54,25 +56,70 @@ insert(Counter, lsContador, (elem) => {
 });
 ///fin contadores
 
-///usuarios
-var lsUsuarios = [
+
+var permisos = [
     {
-        nombre: "marianela14",
-        email: "mari@gmail.com",
-        password: "1234"
-    }, {
-        nombre: "juanjo14",
-        email: "juanjo@gmail.com",
-        password: "1234"
-    }, {
-        nombre: "felipe14",
-        email: "feli_fe@gmail.com",
-        password: "1234"
+        ruta: "/api/ventas",
+        acciones: ["GET", "POST"]
+    },
+    {
+        ruta: "/api/ventas/:id",
+        acciones: ["GET", "PUT", "DELETE"]
     }
-];
-insert(Usuario, lsUsuarios, (elem) => {
+]
+insert(Permission, permisos, (elem) => {
     console.log(elem);
 });
+
+setTimeout(() => {
+    Permission.find((err, per) => {
+        listper = []
+
+        var rol = [{
+            nombre: "Admin",
+            permission: [per[0]._id, per[1]._id]
+        }];
+        insert(Role, rol, (elem) => {
+            console.log(elem);
+        })
+
+    });
+}, 3000);
+
+
+
+
+///usuarios
+
+setTimeout(() => {
+    Role.find((err, rol) => {
+        var lsUsuarios = [
+            {
+                nombre: "marianela14",
+                email: "mari@gmail.com",
+                password: "1234",
+                role: rol[0]._id
+            }, {
+                nombre: "juanjo14",
+                email: "juanjo@gmail.com",
+                password: "1234",
+                role: rol[0]._id
+            }, {
+                nombre: "felipe14",
+                email: "feli_fe@gmail.com",
+                password: "1234",
+                role: rol[0]._id
+            }
+        ];
+        insert(Usuario, lsUsuarios, (elem) => {
+            console.log(elem);
+        });
+    })
+}, 6000);
+
+
+
+
 //fin usuarios
 
 setTimeout(() => {
@@ -100,7 +147,7 @@ setTimeout(() => {
             console.log(elem);
         });
     });//fin Usuario.find()
-}, 3000);//fin SetTimeout
+}, 9000);//fin SetTimeout
 
 
 //producto
@@ -174,7 +221,7 @@ setTimeout(() => {
             console.log(elem);
         });
     });
-}, 6000);
+}, 12000);
 
 setTimeout(() => {
     Usuario.find((err, user) => {
@@ -202,8 +249,6 @@ setTimeout(() => {
             });//fin insert
         });//fin DetalleVentas.find()
     });//fin Usuario.find()
-}, 9000);//fin SetTimeout
-
-
+}, 15000);//fin SetTimeout
 
 

@@ -2,25 +2,22 @@ var express = require("express");
 var router = express.Router();
 var Venta = require("../models/venta");
 var DetalleVenta = require("../models/detalle-venta");
-const authorization = require("../midleware/authorization");
-
-
-
-//rutas protegidas
-router.get("/ventas", authorization);
-router.post("/ventas", authorization);
-router.get("/ventas/:id", authorization);
-router.put("/ventas/:id", authorization);
-router.delete("/ventas/:id", authorization);
-
 
 router.route("/ventas")
     .get((req, res) => {
+
         Venta.find()
             .populate('cliente')
             .populate({ path: 'detalleVenta', populate: { path: 'producto' } })
             .exec((err, venta) => {
-                res.status(200).jsonp(venta);
+                try {
+                    if (err) console.log(err);
+                    res.status(200).jsonp(venta);
+                }
+                catch (e) {
+                    console.log("cabeza rescribida");
+                }
+
             });
     })
     .post((req, res) => {
