@@ -5,7 +5,6 @@ var DetalleVenta = require("../models/detalle-venta");
 
 router.route("/ventas")
     .get((req, res) => {
-
         Venta.find()
             .populate('cliente')
             .populate({ path: 'detalleVenta', populate: { path: 'producto' } })
