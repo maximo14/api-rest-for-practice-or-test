@@ -5,7 +5,7 @@ var Usuario = require("../models/usuario");
 var Role = require("../models/role");
 var Permission = require("../models/permission");
 
-module.exports = (req, res, next) => { 
+module.exports = (req, res, next) => {
     if ((req.baseUrl + req.path) == '/api/singin' || (req.baseUrl + req.path) == '/api/singup') {
         return next()
     }
@@ -30,14 +30,14 @@ module.exports = (req, res, next) => {
             if (err) console.log("error en buscar usario validacion permisos");
             if (user != null && user.role != null) {
                 for (per of user.role.permission) {
-                    if (per.ruta == req.baseUrl + req.path) {
+                    if (validatePath(req, per)) {
                         if (per.acciones.indexOf(req.method) == -1) {
                             return res
                                 .status(401)
                                 .send({ message: "No tienes permisos para realizar esta acccion: " + req.method });
                         } else {
-                            return next();  
-                        }                      
+                            return next();
+                        }
                     }
                 }//fin for
                 return res
@@ -49,4 +49,20 @@ module.exports = (req, res, next) => {
                     .send({ message: "El usuario no es valido" });
             }
         });
+}
+
+//valida si tiene permisos para acceder a esa ruta
+function validatePath(req, permiso) {    
+    var aPermRuta = permiso.ruta.split("/");
+    var aReqRuta = (req.baseUrl + req.path).split("/");
+    var band = true;
+    for (let i = 0; i < aPermRuta.length; i++) {
+        if (aPermRuta[i] != aReqRuta[i]) {
+            if (aPermRuta[i] != "id") {
+                band = false;
+                break;
+            }
+        }
+    }
+    return band;
 }
