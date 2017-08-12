@@ -2,10 +2,10 @@ var express = require("express");
 var router = express.Router();
 var Producto = require("../models/producto");
 
-
+//se le agrego filtros a los productos
 router.route("/productos")
-    .get((req, res) => {
-        Producto.find((err, prod) => {
+    .get((req, res) => {       
+        Producto.find(req.query,(err, prod) => {
             if (err) res.status(500).send(err);
             else {
                 res.status(200).json(prod);

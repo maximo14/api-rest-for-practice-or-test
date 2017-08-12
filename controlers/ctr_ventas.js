@@ -5,18 +5,17 @@ var DetalleVenta = require("../models/detalle-venta");
 
 router.route("/ventas")
     .get((req, res) => {
-        Venta.find()
+        Venta.find(req.query)
             .populate('cliente')
             .populate({ path: 'detalleVenta', populate: { path: 'producto' } })
             .exec((err, venta) => {
                 try {
-                    if (err) console.log(err);
+                    if (err) res.status(500).send(err);
                     res.status(200).jsonp(venta);
                 }
                 catch (e) {
                     console.log("cabeza rescribida");
                 }
-
             });
     })
     .post((req, res) => {
