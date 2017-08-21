@@ -23,7 +23,7 @@ var cliente_schema = new Schema({
 
 
 
-var Usuario = mongoose.model("Cliente", cliente_schema);
+var Cliente = mongoose.model("Cliente", cliente_schema);
 
 //exporto el modulo para que pueda ser accesido desde cualquier parte
-module.exports = Usuario;
+module.exports = Cliente;

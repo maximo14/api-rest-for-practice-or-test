@@ -29,20 +29,33 @@ module.exports = (req, res, next) => {
         .exec((err, user) => {
             if (err) console.log("error en buscar usario validacion permisos");
             if (user != null && user.role != null) {
+                let permiso_ruta = false;//para almacenar si tiene permiso para entrar a la ruta
+                let tieneAccion = false;//bandera para ver si tiene permiso para realizar esa accion                
                 for (per of user.role.permission) {
                     if (validatePath(req, per)) {
-                        if (per.acciones.indexOf(req.method) == -1) {
-                            return res
-                                .status(401)
-                                .send({ message: "No tienes permisos para realizar esta acccion: " + req.method });
-                        } else {
-                            return next();
+                        if (!permiso_ruta) {
+                            permiso_ruta = true
+                        }
+                        if (per.acciones.indexOf(req.method) != -1) {
+                            tieneAccion = true;
+                            break;
                         }
                     }
-                }//fin for
-                return res
-                    .status(401)
-                    .send({ message: `No tienes permiso para acceder a la ruta ${req.baseUrl}${req.path}` });
+                }//fin for               
+                if (permiso_ruta && tieneAccion) {                    
+                    return next();
+                }
+                if (!permiso_ruta) {
+                    return res
+                        .status(401)
+                        .send({ message: `No tienes permiso para acceder a la ruta ${req.baseUrl}${req.path}` });
+
+                }
+                if (!tieneAccion) {
+                    return res
+                        .status(401)
+                        .send({ message: "No tienes permisos para realizar esta acccion: " + req.method });
+                }
             } else {
                 return res
                     .status(401)
@@ -52,13 +65,13 @@ module.exports = (req, res, next) => {
 }
 
 //valida si tiene permisos para acceder a esa ruta
-function validatePath(req, permiso) {    
+function validatePath(req, permiso) {
     var aPermRuta = permiso.ruta.split("/");
-    var aReqRuta = (req.baseUrl + req.path).split("/");
+    var aReqRuta = (req.baseUrl + req.path).split("/");   
     var band = true;
-    for (let i = 0; i < aPermRuta.length; i++) {
+    for (let i = 0; i < aReqRuta.length; i++) {      
         if (aPermRuta[i] != aReqRuta[i]) {
-            if (aPermRuta[i] != "id") {
+            if (aPermRuta[i] != ":id") {            
                 band = false;
                 break;
             }

@@ -7,7 +7,7 @@ var venta_schema = new Schema({
   nro_venta:Number,
   cliente: {
     type: Schema.Types.ObjectId,
-    ref: "Usuario",
+    ref: "Cliente",
     required: [true, 'El campo cliente es obligatorio']
   },
   fecha: {
