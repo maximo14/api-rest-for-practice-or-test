@@ -4,7 +4,7 @@ var Usuario = require("../models/usuario");
 var Service = require("../shared/service");
 
 
-router.route("/singup")
+router.route("/singup")//registar
     .post((req, res) => {
         var user = new Usuario({
             nombre: req.body.nombre,
@@ -21,11 +21,11 @@ router.route("/singup")
                     }
                 });
             } else res.status(500).send({
-                message: `El usuario ingresado ya existe` });
+                error: `El usuario ingresado ya existe` });
         });
     });
 
-router.route("/singin")
+router.route("/singin")//loguiar
     .post((req, res) => {
         Usuario.findOne({
             nombre: req.body.nombre            
@@ -39,11 +39,11 @@ router.route("/singin")
                              else{                               
                                  if(isMatch == true) res.status(200).jsonp({ token: Service.createToken(user) });
                                  else res.status(500).send({
-                                message: `El nombre o la password del usuario no coinciden con uno existente`});
+                                error: `El nombre o la password del usuario no coinciden con uno existente`});
                              }
                         });                      
                     } else res.status(500).send({
-                        message: `El nombre o la password del usuario no coinciden con uno existente`  });
+                        error: `El nombre o la password del usuario no coinciden con uno existente`  });
                 }
             });
     });

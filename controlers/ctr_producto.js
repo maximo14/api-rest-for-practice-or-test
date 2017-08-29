@@ -17,6 +17,7 @@ router.route("/productos")
             nombre: req.body.nombre,
             marca: req.body.marca,
             precio: req.body.precio,
+            foto: req.body.foto
         });
         producto.save((err, prod) => {
             if (err) res.status(500).send(err);
@@ -39,7 +40,8 @@ router.route("/productos/:id")
         Producto.findByIdAndUpdate({ _id: req.params.id }, {
             nombre: req.body.nombre,
             marca: req.body.marca,
-            precio: req.body.precio
+            precio: req.body.precio,
+            foto: req.body.foto
         }, (err, prod) => {
             if (err) res.status(500).send(err);
             else {

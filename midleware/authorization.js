@@ -6,13 +6,17 @@ var Role = require("../models/role");
 var Permission = require("../models/permission");
 
 module.exports = (req, res, next) => {
-    if ((req.baseUrl + req.path) == '/api/singin' || (req.baseUrl + req.path) == '/api/singup') {
+
+    if ((req.baseUrl + req.path) == '/api/singin' || (req.baseUrl + req.path) == '/api/singup') {        
+        return next()
+    }
+    if ((req.baseUrl + req.path) == '/api/productos' && req.method == 'GET') {
         return next()
     }
     if (!req.headers.authorization) {
         return res
             .status(401)
-            .send({ message: "Tu petición no tiene cabecera de autorización" });
+            .send({ error: "Tu petición no tiene cabecera de autorización" });
     }
 
     var token = req.headers.authorization;
@@ -21,9 +25,8 @@ module.exports = (req, res, next) => {
     } catch (e) {
         return res
             .status(401)
-            .jsonp({ message: "El token enviado no es un token valido" });
+            .jsonp({ error: "El token enviado no es un token valido" });
     }
-
     Usuario.findById({ _id: payload.sub })
         .populate({ path: "role", populate: { path: "permission" } })
         .exec((err, user) => {
@@ -37,29 +40,29 @@ module.exports = (req, res, next) => {
                             permiso_ruta = true
                         }
                         if (per.acciones.indexOf(req.method) != -1) {
-                            tieneAccion = true;
+                            tieneAccion = true;                           
                             break;
                         }
                     }
                 }//fin for               
-                if (permiso_ruta && tieneAccion) {                    
+                if (permiso_ruta && tieneAccion) {
                     return next();
                 }
                 if (!permiso_ruta) {
                     return res
-                        .status(401)
-                        .send({ message: `No tienes permiso para acceder a la ruta ${req.baseUrl}${req.path}` });
+                        .status(403)
+                        .send({ error: `No tienes permiso para acceder a la ruta ${req.baseUrl}${req.path}` });
 
                 }
                 if (!tieneAccion) {
                     return res
-                        .status(401)
-                        .send({ message: "No tienes permisos para realizar esta acccion: " + req.method });
+                        .status(403)
+                        .send({ error: "No tienes permisos para realizar esta acccion: " + req.method });
                 }
             } else {
                 return res
-                    .status(401)
-                    .send({ message: "El usuario no es valido" });
+                    .status(403)
+                    .send({ error: "El usuario no es valido" });
             }
         });
 }
@@ -67,11 +70,11 @@ module.exports = (req, res, next) => {
 //valida si tiene permisos para acceder a esa ruta
 function validatePath(req, permiso) {
     var aPermRuta = permiso.ruta.split("/");
-    var aReqRuta = (req.baseUrl + req.path).split("/");   
+    var aReqRuta = (req.baseUrl + req.path).split("/");
     var band = true;
-    for (let i = 0; i < aReqRuta.length; i++) {      
+    for (let i = 0; i < aReqRuta.length; i++) {
         if (aPermRuta[i] != aReqRuta[i]) {
-            if (aPermRuta[i] != ":id") {            
+            if (aPermRuta[i] != ":id") {
                 band = false;
                 break;
             }

@@ -12,7 +12,8 @@ var producto_schema = new Schema({
         type: Number,
         required:[true,'El campo precio es obligatorio'],
         min:[0,'El valor minimo de un producto es de $0']
-    }
+    },
+    foto: String
 });
 
 

@@ -4,7 +4,7 @@ var Cliente = require("../models/cliente");
 
 router.route("/clientes")
     .get((req, res) => {
-        Cliente.find((err, client) => {
+        Cliente.find(req.query,(err, client) => {
             if (err) res.status(500).send(err);
             else res.status(200).jsonp(client);
         });
