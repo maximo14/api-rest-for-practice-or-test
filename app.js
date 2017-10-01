@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const Mockgoose = require('mockgoose').Mockgoose;//para el mock de db se datos
 const methodOverride = require("method-override");
 const authorization = require("./midleware/authorization");
+const cors = require("cors");
 
 //config
 const config = require("./config");
@@ -54,6 +55,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json' }));
 app.use(methodOverride());
+app.use(cors());
 
 
 //routers
